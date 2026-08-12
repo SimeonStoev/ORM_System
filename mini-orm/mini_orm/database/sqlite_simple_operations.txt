@@ -1,0 +1,18 @@
+import sqlite3
+
+# или изцяло в паметта (изчезва при затваряне, идеално за тестове):
+connection = sqlite3.connect(":memory:")
+
+cursor = connection.cursor()
+
+cursor.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)")
+cursor.execute("INSERT INTO users (name) VALUES (?)", ("Ivan",))
+cursor.execute("INSERT INTO users (name) VALUES (?)", ("Petkan",))
+cursor.execute("INSERT INTO users (name) VALUES (?)", ("Georgi",))
+connection.commit()
+
+cursor.execute("SELECT * FROM users WHERE ID = ? and name != ?", (1,"Ivan"))
+rows = cursor.fetchall()  # [(1, 'Ivan'), (2, 'Petkan'), (3, 'Georgi')]
+print(rows)
+
+connection.close()

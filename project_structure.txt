@@ -1,0 +1,59 @@
+mini-orm/                          ← Directory (корен на репото, НЕ package)
+│
+├── .github/                       ← Directory (CI конфигурация, не Python код)
+│   └── workflows/
+│       └── tests.yml
+│
+├── mini_orm/                      ← Package (главният код на библиотеката)
+│   ├── __init__.py                ←   експортира публичното API (Model, Field типове и т.н.)
+│   │
+│   ├── database/                  ← Package (Итерация 1, + BaseDatabase/PostgresDatabase в месец 2)
+│   │   ├── __init__.py
+│   │   ├── base.py                →   BaseDatabase (ABC) — добавя се в месец 2
+│   │   └── sqlite_database.py     →   SqliteDatabase
+│   │
+│   ├── fields/                    ← Package (Итерация 2)
+│   │   ├── __init__.py
+│   │   ├── base.py                →   Field (абстрактен базов клас)
+│   │   ├── integer_field.py       →   IntegerField
+│   │   ├── char_field.py          →   CharField
+│   │   ├── boolean_field.py       →   BooleanField
+│   │   ├── float_field.py         →   FloatField
+│   │   └── foreign_key.py         →   ForeignKey (Итерация 6, по избор)
+│   │
+│   ├── models/                    ← Package (Итерации 3 + 4)
+│   │   ├── __init__.py
+│   │   ├── meta.py                →   ModelMeta (метакласът)
+│   │   └── base_model.py          →   Model (CRUD: save/delete/refresh_from_db)
+│   │
+│   ├── query/                     ← Package (Итерация 5)
+│   │   ├── __init__.py
+│   │   ├── manager.py             →   Manager/objects дескриптор
+│   │   ├── queryset.py            →   QuerySet (all/get/filter)
+│   │   └── lookups.py             →   parsing на __gte/__contains и т.н.
+│   │
+│   └── exceptions.py              →   собствени изключения (ако решиш да добавиш)
+│
+├── tests/                         ← Directory (не е package, ако ползваш pytest без __init__.py; ако ползваш unittest discover, добави __init__.py файлове)
+│   ├── test_database/
+│   │   └── test_sqlite_database.py
+│   ├── test_fields/
+│   │   ├── test_integer_field.py
+│   │   ├── test_char_field.py
+│   │   └── test_boolean_field.py
+│   ├── test_models/
+│   │   ├── test_model_meta.py
+│   │   └── test_model_crud.py
+│   └── test_query/
+│       ├── test_manager.py
+│       └── test_lookups.py
+│
+├── examples/                      ← Directory (демонстрационни скриптове, не част от библиотеката)
+│   └── quickstart.py              →   примерът от README-то, но като изпълним файл
+│
+├── docs/                          ← Directory (по избор, за по-разширена документация)
+│
+├── .gitignore
+├── README.md
+├── pyproject.toml                 ← метаданни на проекта + конфигурация на black/ruff/pytest
+└── requirements-dev.txt           ← pytest, black, ruff и т.н. (dev-only зависимости)
