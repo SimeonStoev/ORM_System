@@ -7,7 +7,7 @@ class IntegerField(Field):
 
 
     def validate(self, value):
-        if not isinstance(value, int):
+        if not isinstance(value, int) or isinstance(value, bool):
             raise ValueError(f"Value '{value}' is not an integer.")
 
     def sql_type(self):

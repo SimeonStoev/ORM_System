@@ -23,6 +23,15 @@ class TestIntegerField(TestCase):
         field = IntegerField(value=None)
         self.assertIsNone(field.value)
 
+    def test_bool_value_is_rejected(self):
+        with self.assertRaises(ValueError) as ex:
+            IntegerField(value=True)
+        self.assertEqual(str(ex.exception), "Value 'True' is not an integer.")
+
+        with self.assertRaises(ValueError) as ex:
+            IntegerField(value=False)
+        self.assertEqual(str(ex.exception), "Value 'False' is not an integer.")
+
     def test_sql_type(self):
         field = IntegerField(value=10)
         self.assertEqual(field.sql_type(), "INTEGER")

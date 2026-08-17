@@ -32,6 +32,17 @@ class TestFloatField(TestCase):
             field.value = "not a float"
         self.assertEqual(str(ex.exception), "Value 'not a float' is not a real number.")
 
+    def test_bool_value_as_float(self):
+        # Test that boolean values are not accepted
+        field = FloatField(1.23)
+        with self.assertRaises(ValueError) as ex:
+            field.value = True
+        self.assertEqual(str(ex.exception), "Value 'True' is not a real number.")
+
+        with self.assertRaises(ValueError) as ex:
+            field.value = False
+        self.assertEqual(str(ex.exception), "Value 'False' is not a real number.")
+
     def test_float_field_nullable(self):
         # Test nullable field
         field = FloatField(None, nullable=True)
