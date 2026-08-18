@@ -16,3 +16,6 @@ rows = cursor.fetchall()  # [(1, 'Ivan'), (2, 'Petkan'), (3, 'Georgi')]
 print(rows)
 
 connection.close()
+
+# Test sql select statement
+select * from users where id < 100;
