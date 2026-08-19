@@ -19,6 +19,9 @@ class Field(ABC):
             raise ValueError("This field cannot be null.")
         self._value = value
 
+    def clone(self, value):
+        return type(self)(value, primary_key=self.primary_key, nullable=self.nullable, unique=self.unique)
+
     @abstractmethod
     def validate(self, value):
         pass
