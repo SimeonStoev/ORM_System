@@ -1,10 +1,9 @@
 from mini_orm.models.meta import ModelMeta
-from mini_orm.fields.integer_field import IntegerField
-from mini_orm.fields.char_field import CharField
-from mini_orm.database.sqlite_database import SqliteDatabase
+
 
 class Model(metaclass=ModelMeta):
     _database = None
+
     def __init__(self, **kwargs):
         for field_name, field_ref in self._fields.items():
             value = field_ref.value
