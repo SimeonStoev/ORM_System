@@ -46,27 +46,3 @@ class Model(metaclass=ModelMeta):
     def drop_table(cls):
         sql = f"DROP TABLE IF EXISTS {cls.table_name}"
         cls._database.execute(sql)
-
-
-
-
-class User(Model):
-    id = IntegerField(value=None, primary_key=True)
-    name = CharField(value=None, max_length=100)
-    age = IntegerField(value=None)
-    descr = CharField(value=None, max_length=100)
-
-u1 = User(id=1, name="Ivan", age=30)
-u2 = User(id=2, name="Koko", age=40)
-print(u1)
-print(u2)
-
-u1.age.value = 35
-print(u1)
-print(u2)
-
-User.configure(SqliteDatabase(":memory:"))
-User.create_table()
-print(User.table_name)
-print(User._database.fetch_all("PRAGMA table_info(users)"))
-User.drop_table()
