@@ -14,3 +14,6 @@ class CharField(Field):
 
     def sql_type(self):
         return f"VARCHAR({self.max_length})"
+
+    def clone(self, value):
+        return CharField(value, max_length=self.max_length, primary_key=self.primary_key, nullable=self.nullable, unique=self.unique)
