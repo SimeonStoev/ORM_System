@@ -30,7 +30,7 @@ class TestModelInit(TestCase):
 
     def test_repr_includes_all_fields(self):
         u = User(name="Ivan", age=30)
-        self.assertIn("name=Ivan", repr(u))
+        self.assertIn("name='Ivan'", repr(u))
         self.assertIn("age=30", repr(u))
 
 

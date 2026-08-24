@@ -12,9 +12,17 @@ class Model(metaclass=ModelMeta):
             setattr(self, field_name, field_ref.clone(value))
 
     def __repr__(self):
-        fields_repr = [f"{field_name}={getattr(self, field_name).value}" for field_name in self._fields]
+        fields_repr = [f"{field_name}={getattr(self, field_name).value!r}" for field_name in self._fields]
         fields = ", ".join(fields_repr)
         return f"{type(self).__name__}({fields})"
+
+    @classmethod
+    def is_database_configured(cls):
+        if cls._database is None:
+            raise RuntimeError(
+                f"{cls.__name__}._database is not configured. "
+                f"Call {cls.__name__}.configure(database) first."
+            )
 
     @classmethod
     def configure(cls, database):
@@ -22,11 +30,7 @@ class Model(metaclass=ModelMeta):
 
     @classmethod
     def create_table(cls):
-        if cls._database is None:
-            raise RuntimeError(
-                f"{cls.__name__}._database is not configured. "
-                f"Call {cls.__name__}.configure(database) first."
-            )
+        cls.is_database_configured()
         columns = []
         # name type primary key not null unique, new line
         for field_name, field_ref in cls._fields.items():
